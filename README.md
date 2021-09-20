@@ -7,5 +7,5 @@ and high temp PT100 saensor without having to hack into the somewhat broken supp
 
 The board supports two PT100.  I have in mind using this to control the hotends on an IDEX printer I will use to print Nylon and dissolvable support material.  But this code is for the old single channel version of the board.
 
-TODO: port this firmware to the new two channel board ( [github](https://github.com/wallaceowen/PTDriverFirmware) )
+TODO: port this firmware to the new two channel board ( [github](https://github.com/wallaceowen/PTDriver) )
 
