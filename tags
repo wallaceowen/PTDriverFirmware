@@ -1,0 +1,98 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Align	control.cpp	/^enum Align { AlignLeft, AlignRight, AlignCenter };$/;"	g	file:
+AlignCenter	control.cpp	/^enum Align { AlignLeft, AlignRight, AlignCenter };$/;"	e	enum:Align	file:
+AlignLeft	control.cpp	/^enum Align { AlignLeft, AlignRight, AlignCenter };$/;"	e	enum:Align	file:
+AlignRight	control.cpp	/^enum Align { AlignLeft, AlignRight, AlignCenter };$/;"	e	enum:Align	file:
+Control	control.cpp	/^Control::Control(Display *display, Encoder &encoder, DAC &dac)$/;"	f	class:Control
+Control	control.h	/^class Control$/;"	c
+DAC	dac.h	/^typedef Adafruit_MCP4725 DAC;$/;"	t
+DAC_ADDR	control.cpp	23;"	d	file:
+DAC_ADDR	dac.h	11;"	d
+DEBUG_TIME	debug.h	6;"	d
+DS_Init	display.h	/^    enum DState { DS_Init, DS_While, DS_WaitForUpdate };$/;"	e	enum:Display::DState
+DS_WaitForUpdate	display.h	/^    enum DState { DS_Init, DS_While, DS_WaitForUpdate };$/;"	e	enum:Display::DState
+DS_While	display.h	/^    enum DState { DS_Init, DS_While, DS_WaitForUpdate };$/;"	e	enum:Display::DState
+DState	display.h	/^    enum DState { DS_Init, DS_While, DS_WaitForUpdate };$/;"	g	class:Display
+Display	display.cpp	/^Display::Display() :$/;"	f	class:Display
+Display	display.h	/^class Display$/;"	c
+Encoder	encoder.cpp	/^Encoder::Encoder()$/;"	f	class:Encoder
+Encoder	encoder.h	/^class Encoder$/;"	c
+Field	control.cpp	/^	Field(uint8_t w, uint16_t _x, uint16_t _y, Align a) :$/;"	f	struct:Field
+Field	control.cpp	/^struct Field$/;"	s	file:
+MAX_ALLOWED_VOLTAGE	control.cpp	28;"	d	file:
+MAX_ALLOWED_VOLTAGE	control.cpp	31;"	d	file:
+NUM_TEMPS	temps.cpp	10;"	d	file:
+PT100_CS	ports.h	6;"	d
+RNOMINAL	temps.cpp	14;"	d	file:
+ROTATE	display.cpp	13;"	d	file:
+RREF	temps.cpp	13;"	d	file:
+RenderCallback	display.h	/^typedef void (*RenderCallback)(U8G2*, void*);$/;"	t
+SCALE	control.cpp	29;"	d	file:
+SCALE	control.cpp	32;"	d	file:
+SHOW_DAC	control.cpp	37;"	d	file:
+SHOW_FAHR	control.cpp	39;"	d	file:
+SPI_MISO	ports.h	8;"	d
+SPI_MOSI	ports.h	7;"	d
+SPI_SCK	ports.h	9;"	d
+TARGET_5	control.cpp	25;"	d	file:
+__control_h	control.h	3;"	d
+__dac_h	dac.h	4;"	d
+__debug_h	debug.h	2;"	d
+__display_h	display.h	4;"	d
+__encoder_h	encoder.h	2;"	d
+__ports_h	ports.h	4;"	d
+__temps_h	temps.h	2;"	d
+__vnew_h	vnew.h	4;"	d
+adj_temp	control.cpp	/^float adj_temp = 0.0;$/;"	v
+align	control.cpp	/^	Align align;$/;"	m	struct:Field	file:
+compute_voltage	temps.cpp	/^float compute_voltage(float temp)$/;"	f
+int2_isr	encoder.cpp	/^void int2_isr(void)$/;"	f
+int3_isr	encoder.cpp	/^void int3_isr(void)$/;"	f
+last_adj_temp	control.cpp	/^float last_adj_temp = 0.0;$/;"	v
+last_offset	control.cpp	/^float last_offset = 0.0;$/;"	v
+last_temp	control.cpp	/^float last_temp = 0.0;$/;"	v
+last_v	control.cpp	/^float last_v = 0.0;$/;"	v
+loop	control.cpp	/^void Control::loop()$/;"	f	class:Control
+loop	display.cpp	/^void Display::loop()$/;"	f	class:Display
+m_count	encoder.cpp	/^volatile int16_t Encoder::m_count = 0;$/;"	m	class:Encoder	file:
+m_count	encoder.h	/^    static volatile int16_t m_count;$/;"	m	class:Encoder
+m_dac	control.h	/^	DAC        &m_dac;$/;"	m	class:Control
+m_display	control.h	/^	Display    *m_display;$/;"	m	class:Control
+m_encoder	control.h	/^	Encoder    &m_encoder;$/;"	m	class:Control
+m_render_cb	display.h	/^    RenderCallback m_render_cb;$/;"	m	class:Display
+m_render_param	display.h	/^    void * m_render_param;$/;"	m	class:Display
+m_state	display.h	/^    DState m_state;$/;"	m	class:Display
+m_updated	display.h	/^    bool m_updated;$/;"	m	class:Display
+offset	control.cpp	/^float offset = 0.0;$/;"	v
+operator new	vnew.h	/^inline void* operator new(size_t size, void* ptr)$/;"	f
+params_changed	control.cpp	/^bool params_changed()$/;"	f
+read	encoder.h	/^    inline int16_t read() const { return m_count; }$/;"	f	class:Encoder
+read_offset	control.cpp	/^float Control::read_offset(void)$/;"	f	class:Control
+read_temp	temps.cpp	/^uint8_t read_temp(float &temperature)$/;"	f
+ready	display.h	/^    bool ready() const { return m_state == DS_WaitForUpdate; }$/;"	f	class:Display
+render	control.cpp	/^void Control::render(U8G2 &disp)$/;"	f	class:Control
+render	display.cpp	/^void Display::render()$/;"	f	class:Display
+render_cb	control.cpp	/^void render_cb(U8G2 &disp, void *param)$/;"	f
+render_text	control.cpp	/^static void render_text($/;"	f	file:
+set_cb	display.cpp	/^void Display::set_cb(RenderCallback cb, void *param)$/;"	f	class:Display
+show_temp_fault	control.cpp	/^static void show_temp_fault(uint8_t temp_fault)$/;"	f	file:
+state	display.h	/^    DState state() const { return m_state; }$/;"	f	class:Display
+tell_how_long	debug.cpp	/^void tell_how_long(int32_t dur, const char *txt)$/;"	f
+temp	control.cpp	/^float temp = 0.0;$/;"	v
+temps	temps.cpp	/^static float temps[] = {0.0, 20.0, 45.0, 62.0, 100.0, 138.0, 176.0, 215.0, 256.0, 297.0, 340.0, 381.0, 500.0 };$/;"	v	file:
+temps_setup	temps.cpp	/^void temps_setup()$/;"	f
+thermo	temps.cpp	/^static Adafruit_MAX31865 thermo = Adafruit_MAX31865(PT100_CS);$/;"	v	file:
+update	display.h	/^    void update() { m_updated = true; }$/;"	f	class:Display
+update_last_params	control.cpp	/^void update_last_params()$/;"	f
+update_params	control.cpp	/^void update_params(float temperature, float a_temp, float off, float voltage)$/;"	f
+v	control.cpp	/^float v = 0.0;$/;"	v
+v_from_off	control.cpp	/^float v_from_off(float offset)$/;"	f
+volts	temps.cpp	/^static float volts[] = {0.7, .78,  .852, .9,   1.0,   1.101, 1.2,   1.3,   1.4,   1.5,   1.603, 1.7,   3.0};$/;"	v	file:
+width	control.cpp	/^    uint8_t width;$/;"	m	struct:Field	file:
+x	control.cpp	/^	uint16_t x, y;$/;"	m	struct:Field	file:
+y	control.cpp	/^	uint16_t x, y;$/;"	m	struct:Field	file:
