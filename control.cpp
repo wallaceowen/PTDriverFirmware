@@ -151,7 +151,7 @@ void Control::loop()
     now = millis();
 #endif
 
-    Serial.println("control 1");
+    // Serial.println("control 1");
 
 
 #ifdef DEBUG_TIME
@@ -172,12 +172,12 @@ void Control::loop()
 #ifdef DEBUG_TIME
     now = millis();
 #endif
-    Serial.println("control 2");
+    // Serial.println("control 2");
 #ifdef TEST_DAC
     float v = fabs(offset);
 #else
     float v = Temp::compute_voltage(adj_temp);
-    Serial.println("control 3");
+    // Serial.println("control 3");
 
     // Scale to MAX_ALLOWED_VOLTAGE
     v *= SCALE;
@@ -195,7 +195,7 @@ void Control::loop()
 #ifdef DEBUG_TIME
     tell_how_long("update params", millis()-now);
 #endif
-    Serial.println("control 4");
+    // Serial.println("control 4");
 
 #ifdef DEBUG_TIME
     now = millis();
@@ -208,7 +208,7 @@ void Control::loop()
             update_last_params();
         }
     }
-    Serial.println("control 5");
+    // Serial.println("control 5");
 #ifdef DEBUG_TIME
     tell_how_long("update params", millis()-now);
 #endif
@@ -228,11 +228,15 @@ void Control::loop()
 #ifdef DEBUG_TIME
     now = millis();
 #endif
-    Serial.println("control 5.5");
+    // Serial.println("control 5.5");
+
+    Serial.print("Dac val: ");
+    Serial.println(dacval);
+
     dac.setVoltage(dacval, false);
-    Serial.println("control 5.6");
+    // Serial.println("control 5.6");
 #ifdef DEBUG_TIME
     tell_how_long("set dac", millis()-now);
 #endif
-    Serial.println("control 6");
+    // Serial.println("control 6");
 }

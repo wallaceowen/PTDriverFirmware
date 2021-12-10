@@ -57,7 +57,7 @@ void setup()
 
 void loop()
 {
-Serial.println("test 1");
+// Serial.println("test 1");
 #ifdef DEBUG_TIME
     int32_t now = 0;
 #endif
@@ -67,28 +67,29 @@ Serial.println("test 1");
 #ifdef DEBUG_TIME
         now = millis();
 #endif
-Serial.println("test 2");
+// Serial.println("test 2");
 
+        temp->loop();
         control->loop();
-Serial.println("test 3");
+// Serial.println("test 3");
 
 #ifdef DEBUG_TIME
         tell_how_long("after_c", millis()-now);
 #endif
-Serial.println("test 4");
+// Serial.println("test 4");
 
 #ifdef DEBUG_TIME
         now = millis();
 #endif
-Serial.println("test 5");
+// Serial.println("test 5");
 
         display->loop();
-Serial.println("test 6");
+// Serial.println("test 6");
 
 #ifdef DEBUG_TIME
         tell_how_long("after_d", millis()-now);
 #endif
-Serial.println("test 7");
+// Serial.println("test 7");
     }
 }
 

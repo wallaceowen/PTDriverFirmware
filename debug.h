@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define DEBUG_TIME
+// #define DEBUG_TIME
 
 extern void tell_how_long(const char *, int32_t);
 

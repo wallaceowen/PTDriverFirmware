@@ -20,7 +20,7 @@ static Adafruit_MAX31865 thermo = Adafruit_MAX31865(PT100_CS);
 
 // look up the temp in the temp table, use lerp against volts table
 // to find linear approximation of the right point between two known points
-static float Temp::compute_voltage(float temp)
+float Temp::compute_voltage(float temp)
 {
     for (unsigned i = 0; i < NUM_TEMPS-1; ++i)
         if ((temp >= temps[i]) && (temp < temps[i+1]))
@@ -35,7 +35,7 @@ static float Temp::compute_voltage(float temp)
     return 0.0;
 }
 
-static uint8_t Temp::read_temp(float &temperature)
+uint8_t Temp::read_temp(float &temperature)
 {
     temperature = thermo.temperature(RNOMINAL, RREF);
     return thermo.readFault();
@@ -67,24 +67,38 @@ void Temp::show_temp_fault(uint8_t temp_fault)
         disp_show(1, 0, "RTDIN open");
     if (temp_fault & MAX31865_FAULT_OVUV)
         disp_show(1, 0, "Bad voltage");
+#else
+    char buffer[32];
+    sprintf(buffer, "Fault 0x%x", temp_fault);
+    Serial.print("Temp ");
+    Serial.println(buffer);
 #endif
 }
 
 #define SCOUNT_MOD 1
+
+void show_temp(float temp)
+{
+    Serial.print("Temp ");
+    Serial.println(temp);
+}
 
 void Temp::loop()
 {
     static int scount = 0;
 
     ++scount;
-    if (!(scount%SCOUNT_MOD))
+    // if (!(scount%SCOUNT_MOD))
     {
         float temp;
         uint8_t temp_fault = read_temp(temp);
         if (temp_fault)
             show_temp_fault(temp_fault);
         else
+        {
             m_temp = temp;
+            show_temp(m_temp);
+        }
     }
 
 }
