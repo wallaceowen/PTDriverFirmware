@@ -10,9 +10,13 @@ typedef void (*ButtonsCB)(int button, bool state, void *arg);
 class Buttons
 {
 public:
-    enum Constants { Btn_Num=2 };
+    enum Constants { DownButton=0, UpButton=1, Btn_Num=2 };
+
+    Buttons();
 
     Buttons(ButtonsCB cb, void*arg);
+
+    void set_cb(ButtonsCB cb, void *arg);
 
     bool pressed(int which);
 

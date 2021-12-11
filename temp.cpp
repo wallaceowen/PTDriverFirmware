@@ -14,6 +14,8 @@ static float temps[] = {0.0, 20.0, 45.0, 62.0, 100.0, 138.0, 176.0, 215.0, 256.0
 #define RREF      430.0
 #define RNOMINAL  100.0
 
+#define TEMP_SAMPLE_INTERVAL 500
+
 // Use software SPI: CS, DI, DO, CLK
 // static Adafruit_MAX31865 thermo = Adafruit_MAX31865(PT100_CS, SPI_MOSI, SPI_MISO, SPI_SCK);
 static Adafruit_MAX31865 thermo = Adafruit_MAX31865(PT100_CS);
@@ -85,10 +87,10 @@ void show_temp(float temp)
 
 void Temp::loop()
 {
-    static int scount = 0;
+    static auto next_m = millis()+TEMP_SAMPLE_INTERVAL;
+    auto now = millis();
 
-    ++scount;
-    // if (!(scount%SCOUNT_MOD))
+    if (next_m < now)
     {
         float temp;
         uint8_t temp_fault = read_temp(temp);
@@ -99,9 +101,7 @@ void Temp::loop()
             m_temp = temp;
             show_temp(m_temp);
         }
+        next_m = now+TEMP_SAMPLE_INTERVAL;
     }
 
 }
-
-    // float temperature;
-    // uint8_t temp_fault = read_temp(temperature);

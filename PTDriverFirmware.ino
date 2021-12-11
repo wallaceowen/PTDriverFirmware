@@ -22,6 +22,9 @@
 // Encoder
 #include "encoder.h"
 
+// Buttons
+#include "buttons.h"
+
 // Display
 // The display object buffer (because we have no heap)
 static char disp_buffer[sizeof(Display)];
@@ -36,6 +39,9 @@ static Temp    *temp;
 // The display object buffer (because we have no heap)
 static char control_buffer[sizeof(Control)];
 static Control    *control;
+
+static char buttons_buffer[sizeof(Buttons)];
+static Buttons    *buttons;
 
 // static DAC dac;
 static Encoder encoder;
@@ -52,7 +58,9 @@ void setup()
 
     temp = new (temp_buffer) Temp();
 
-    control = new (control_buffer) Control(display, temp, encoder);
+    buttons = new (buttons_buffer) Buttons();
+
+    control = new (control_buffer) Control(display, temp, encoder, buttons);
 }
 
 void loop()
@@ -70,6 +78,7 @@ void loop()
 // Serial.println("test 2");
 
         temp->loop();
+        buttons->loop();
         control->loop();
 // Serial.println("test 3");
 

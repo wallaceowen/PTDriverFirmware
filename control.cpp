@@ -56,17 +56,29 @@ float Control::last_offset = 0.0;
 // float Control::last_v = 0.0;
 
 // Render ourselves onto the gui
-void render_cb(U8G2 &disp, void *param)
+void render_cb(U8G2 *disp, void *param)
 {
     Control *c = reinterpret_cast<Control*>(param);
-    c->render_fields(disp);
+    c->render_current(disp);
 }
 
-Control::Control(Display *display, Temp *temp, Encoder &encoder)
-	: m_display(display), m_encoder(encoder), m_temp(temp)
+void buttons_cb(int button, bool state, void *arg)
+{
+    Control *c = reinterpret_cast<Control*>(arg);
+	c->handle_buttons(button, state);
+}
+
+Control::Control(Display *display, Temp *temp, Encoder &encoder, Buttons *buttons) :
+    m_state(CS_Status),
+    m_dirty(true),
+    m_display(display),
+    m_encoder(encoder),
+    m_temp(temp),
+    m_buttons(buttons)
 {
     dac.begin(DAC_ADDR);
-	m_display->set_cb(render_cb, 0);
+	m_display->set_cb(render_cb, this);
+    m_buttons->set_cb(buttons_cb, this);
 }
 
 // Read the encoder, deal with offset
@@ -103,41 +115,99 @@ bool Control::params_changed()
 }
 
 // Display is 128x64
-void Control::render_fields(U8G2 &disp) const
+void Control::render_current(U8G2 *disp)
 {
-	disp.setDrawColor(1);
-	disp.setFontMode(1);
-	static bool updated = false;
+    if (m_dirty)
+    {
+        disp->clear();
+        m_dirty = false;
+    }
+
+    if (m_state == CS_Status)
+        render_fields(disp);
+    else if (m_state == CS_ThermSet)
+        show_therm_menu(disp);
+    else if (m_state == CS_Save)
+        show_save_menu(disp);
+}
+
+void Control::render_fields(U8G2 *disp)
+{
+	disp->setDrawColor(1);
+	disp->setFontMode(1);
 	char buffer[32];
 
-    disp.setFont(u8g_font_courR10);
+    disp->setFont(u8g_font_courR10);
 	String tstr(temperature);
 	sprintf(buffer, "%s\xb0", tstr.c_str());
-    u8g2_uint_t width = disp.getStrWidth(buffer);
-    int height = disp.getMaxCharHeight();
-	render_field(disp, Field(128, 0, 0, AlignLeft), buffer);
+    u8g2_uint_t width = disp->getStrWidth(buffer);
+    int height = disp->getMaxCharHeight();
+	render_field(*disp, Field(128, 0, 0, AlignLeft), buffer);
 
-    float fahr = temperature * 9 / 5 + 32.0;
+    float fahr = temperature * 9 / 5.0 + 32.0;
 	String fstr(fahr);
 	sprintf(buffer, "(%s\xb0%c)", fstr.c_str(), 'F');
-	render_field(disp, Field(128-(width+2), width+2, 0, AlignRight), buffer);
+	render_field(*disp, Field(128-(width+2), width+2, 0, AlignRight), buffer);
 
 	String ostr(offset);
 	sprintf(buffer, "OFFSET %s\xb0", ostr.c_str());
-	render_field(disp, Field(128, 0, height, AlignLeft), buffer);
+	render_field(*disp, Field(128, 0, height, AlignLeft), buffer);
 
 	String astr(adj_temp);
 	sprintf(buffer, "OUTPUT %s\xb0", astr.c_str());
-	render_field(disp, Field(128, 0, height*2, AlignLeft), buffer);
+	render_field(*disp, Field(128, 0, height*2, AlignLeft), buffer);
 
 	String vstr(voltage);
 	sprintf(buffer, "VOLTS %s", vstr.c_str());
-	render_field(disp, Field(128, 0, height*3, AlignLeft), buffer);
+	render_field(*disp, Field(128, 0, height*3, AlignLeft), buffer);
 }
+void Control::show_therm_menu(U8G2 *disp)
+{
+	disp->setDrawColor(1);
+	disp->setFontMode(1);
+    disp->setFont(u8g_font_courR10);
+    disp->drawStr(20, 20, "THERM");
+}
+
+void Control::show_save_menu(U8G2 *disp)
+{
+	disp->setDrawColor(1);
+	disp->setFontMode(1);
+    disp->setFont(u8g_font_courR10);
+    disp->drawStr(20, 20, "SAVE");
+}
+
 
 float v_from_off(float offset)
 {
     return fabs(offset);
+}
+
+void Control::handle_buttons(int button, bool button_state)
+{
+    Serial.print("button ");
+    Serial.print(button);
+    Serial.print(" ");
+    Serial.println(button_state?"true":"false");
+
+    if ((button == Buttons::UpButton) && button_state)
+    {
+        if (m_state < (Num_CS-1))
+        {
+            ++m_state;
+            m_dirty = true;
+            // disp->clear();
+        }
+    }
+    else if ((button == Buttons::DownButton) && button_state)
+    {
+        if (m_state > 0)
+        {
+            --m_state;
+            m_dirty = true;
+            // disp->clear();
+        }
+    }
 }
 
 void Control::loop()
@@ -230,8 +300,8 @@ void Control::loop()
 #endif
     // Serial.println("control 5.5");
 
-    Serial.print("Dac val: ");
-    Serial.println(dacval);
+    // Serial.print("Dac val: ");
+    // Serial.println(dacval);
 
     dac.setVoltage(dacval, false);
     // Serial.println("control 5.6");

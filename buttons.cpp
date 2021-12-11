@@ -6,12 +6,24 @@
 #include "ports.h"
 #include "buttons.h"
 
+// Buttons::Buttons() : m_cb(0), m_cbarg(0)
+Buttons::Buttons()
+{
+    Buttons(0, 0);
+}
+
 Buttons::Buttons(ButtonsCB cb, void*arg) : m_cb(cb), m_cbarg(arg)
 // Buttons::Buttons(void)
 {
     memset(m_last, 0, sizeof(m_last));
     pinMode(BTN_1, INPUT);
     pinMode(BTN_2, INPUT);
+}
+
+void Buttons::set_cb(ButtonsCB cb, void *arg) 
+{
+    m_cb = cb;
+    m_cbarg = arg;
 }
 
 void Buttons::loop(void)
