@@ -51,6 +51,7 @@ void setup()
     Serial.begin(115200);
     while(!Serial) {} // Wait for serial port
 
+    Serial.println("setup()");
     Wire.begin();
     // dac.begin(DAC_ADDR);
 
@@ -70,35 +71,34 @@ void loop()
     int32_t now = 0;
 #endif
 
-    // while (true)
-    {
+    Serial.println("setup()");
+
 #ifdef DEBUG_TIME
-        now = millis();
+    now = millis();
 #endif
 // Serial.println("test 2");
 
-        temp->loop();
-        buttons->loop();
-        control->loop();
+    temp->loop();
+    buttons->loop();
+    control->loop();
 // Serial.println("test 3");
 
 #ifdef DEBUG_TIME
-        tell_how_long("after_c", millis()-now);
+    tell_how_long("after_c", millis()-now);
 #endif
 // Serial.println("test 4");
 
 #ifdef DEBUG_TIME
-        now = millis();
+    now = millis();
 #endif
 // Serial.println("test 5");
 
-        display->loop();
+    display->loop();
 // Serial.println("test 6");
 
 #ifdef DEBUG_TIME
-        tell_how_long("after_d", millis()-now);
+    tell_how_long("after_d", millis()-now);
 #endif
 // Serial.println("test 7");
-    }
 }
 
